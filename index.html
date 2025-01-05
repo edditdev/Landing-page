@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Profile Clone</title>
+  <!-- Modal -->
+<div id="bot-modal" class="modal">
+  <div class="modal-content">
+    <h2>Are you nigga bot?</h2>
+    <div class="modal-buttons">
+      <button id="no-button">No</button>
+      <button id="yes-button">Yes</button>
+    </div>
+  </div>
+</div>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #23272a, #5865f2);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+
+      /* Modal styles */
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: #2c2f33;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    padding: 20px 40px;
+    text-align: center;
+    width: 300px;
+    animation: popUp 0.3s ease-out;
+  }
+
+  @keyframes popUp {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .modal-buttons button {
+    background: #5865f2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .modal-buttons button:hover {
+    background: #4752c4;
+  }
+
+
+
+
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .emoji-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatEmojis 10s ease-in-out infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatEmojis {
+      0% { transform: translateY(100vh) rotate(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+
+    .watermark {
+      position: absolute;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+      animation: moveWatermark 10s linear infinite;
+    }
+
+    @keyframes moveWatermark {
+      0% { transform: translate(-100%, -100%); }
+      50% { transform: translate(50%, 50%); }
+      100% { transform: translate(100%, 100%); }
+    }
+
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .profile, .projects {
+      background: #2c2f33;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      border: 1px solid #23272a;
+    }
+
+    .profile {
+      width: 360px;
+    }
+
+    .projects {
+      width: 500px;
+      padding: 20px;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #5865f2, #2c2f33);
+      padding: 40px 20px 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid white;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .username {
+      margin-top: 120px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .tag {
+      color: #b9bbbe;
+      font-size: 0.9rem;
+    }
+
+    .about {
+      padding: 20px;
+      font-size: 0.9rem;
+      background: #2c2f33;
+      border-top: 1px solid #23272a;
+    }
+
+    .about h2 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .about p {
+      margin: 0;
+      color: #b9bbbe;
+    }
+
+    .joined {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #b9bbbe;
+    }
+
+    .social-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social-button {
+      width: 80%;
+      padding: 10px 15px;
+      border-radius: 5px;
+      background: #5865f2;
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .social-button:hover {
+      background: #4752c4;
+    }
+
+
+
+
+
+    .rich-presence {
+      margin-top: 20px;
+      padding: 20px;
+      background: #2c2f33;
+      border-radius: 8px;
+      border: 1px solid #23272a;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rich-presence img {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+    }
+
+    .rich-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rich-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      margin: 0;
+    }
+
+    .rich-details {
+      color: #b9bbbe;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+        .view-project {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      background: #5865f2;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .view-project:hover {
+      background: #4752c4;
+    }
+
+.project-card {
+  display: flex;
+  align-items: center; /* Ustawienie wyrównania */
+  width: 100%; /* Ustalona szerokość karty */
+  height: 110px; /* Ustalona wysokość karty */
+  background: #23272a;
+  border-radius: 8px;
+  border: 1px solid #2c2f33;
+  margin-bottom: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-card img {
+  width: 20px; /* Zmniejszenie tylko obrazka */
+  height: 20px; /* Zmniejszenie tylko obrazka */
+  object-fit: cover;
+  border-radius: 8px; /* Zaokrąglenie krawędzi obrazka */
+  border: 0.01px solid dodgerblue; /* Białe obramowanie */
+  margin: 25px; /* Dodanie odstępu wokół obrazka */
+}
+
+.project-content {
+  padding: 5px;
+  flex: 1; /* Rozciąganie zawartości wewnątrz karty */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Wyrównanie treści */
+}
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      margin: 0 0 5px 0;
+    }
+
+    .project-description {
+      font-size: 0.9rem;
+      color: #b9bbbe;
+      margin: 0 0 10px 0;
+    }
+
+    .project-link {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background: #5865f2;
+      color: white;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .project-link:hover {
+      background: #4752c4;
+    }
+
+
+
+
+    .discord-button {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background: #5865f2;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .discord-button:hover {
+      background: #4752c4;
+    }
+
+    .discord-icon {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+
+
+
+
+
+</head>
+<body>
+
+  <div class="emoji-container">
+    <span class="emoji" style="left: 20%; animation-delay: 1s;">💻</span>
+    <span class="emoji" style="left: 50%; animation-delay: 3s;">🔥</span>
+    <span class="emoji" style="left: 80%; animation-delay: 5s;">⚡</span>
+    <span class="emoji" style="left: 40%; animation-delay: 2s;">🎮</span>
+    <span class="emoji" style="left: 70%; animation-delay: 4s;">✨</span>
+  </div>
+
+  <div class="watermark" style="top: 10%; left: 30%;">by eddit</div>
+  <div class="watermark" style="top: 50%; left: 70%;">by eddit</div>
+  <div class="watermark" style="top: 90%; left: 20%;">by eddit</div>
+
+  <div class="container">
+    <div class="profile">
+      <div class="header">
+        <img src="./avatar.jpg" alt="Avatar" class="avatar">
+        <div class="username">eddit<span class="tag"></span></div>
+      </div>
+      <div class="about">
+        <h2>ABOUT ME</h2>
+        <p>.NET | C# | PYTHON</p>
+        <div class="joined">Joined Discord 01.01.2016 11:47</div>
+        <div class="social-buttons">
+          <a href="https://github.com/edditdev" target="_blank" class="social-button">View GitHub</a>
+          <a href="https://veety.xyz" target="_blank" class="social-button">View VEETY Project</a>
+        </div>
+        <div class="rich-presence">
+          <img src="./spoti.svg" alt="Visual Studio Icon">
+          <div class="rich-text">
+            <p class="rich-title">Listening to AVE 2T4</p>
+            <p class="rich-details">nikolai makarov...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="projects">
+      <h2 style="color: white; margin-bottom: 20px;">My Projects</h2>
+      <div class="project-card">
+        <img src="./IMG.png" alt="VEETY | RAT">
+        <div class="project-content">
+          <p class="project-title">VEETY | RAT</p>
+          <p class="project-description">No port forwarding free rat project.</p>
+          <a href="https://veety.xyz/" class="project-link">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="./IMG.png" alt="Project 2">
+        <div class="project-content">
+          <p class="project-title">RE-Streams</p>
+          <p class="project-description">Streams of PPV events (#PL)</p>
+          <a href="https://eddit.me/rs" class="project-link">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="./IMG.png" alt="Project 3">
+        <div class="project-content">
+          <p class="project-title">WinRAR Activator</p>
+          <p class="project-description">Activate any version of winrar.</p>
+          <a href="https://github.com/edditdev/WinRAR-Activator" class="project-link">View Project</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="./IMG.png" alt="Project 3">
+        <div class="project-content">
+          <p class="project-title">DirCrypt</p>
+          <p class="project-description">Encrypt & Decrypt files with password.</p>
+          <a href="https://github.com/edditdev/DirCrypt" class="project-link">View Project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="https://discord.com/users/1045389966148116591" target="_blank" class="discord-button">
+    <img src="./discord-icon.svg" alt="Discord Icon" class="discord-icon"> Add me on Discord
+  </a>
+
+<script>
+(function () {
+  const commentBase64 = "5peP5bm456aP5peP5bm456aPYsy4zInNl8y+zJTMkMyIzZHMkcyEzYzNmMyAzL3NgM2QzZDMicybzZ3Mic2DzZ3Mhc2GzL7Nks2DzYzNnMyzzKjMpMyczJ3NnG3MtsyOzL/Nks2EzIPMicySzJHNhsy9zZ3Mjc2DzIrMgsyHzYPMjMyJzZ3MgMyVzJTMv82KzZ3MksyuzYXMqcy8zZbMncylzJ3MmM2IzYfMo8yjzZrMp82azYnMssyxzK/MrMyZzLPMucyrzLvMqsyfzJzNh8yzzK3MlsyuzLvMmMyuzZzNiMykzJfMsc2OzYjNk+acquadpeaEm+WSjOW/g+WkouaWsOS4lueVjOWPi+aDheW4jOacm+WutuaXj+W5uOemj+awuOmBoOaEm+alveW5s+WSjApszLTMjc2BzIjNl82DzYvMi8yLzL7Mhs2RzIrMlcyDzYPNmMy+zZLNjMyAzJrNkMy/zJTNkM2AzZfNjM2EzJTMv8yKzJrMhM2LzI7NhMyRzIzMkM2GzL7MjMydzLHMnMy8zJnNmcy7zZPMpc2azLLMpM2IzY7Mr8yszKTNhcyfzZbMmc2HzLFuzLjMgMySzZjNgcyTzITMlM2YzZ3NksyCzIrMhsyQzZjMm82EzZLNl8y9zI/Mhcy+zZjMkc2EzITMiMyIzIXNis2YzIfMiM2GzJvNic2ZzJfMqc2azZXMmMy6zZnMq8ylzJ3MusyZzKHMocyrzKnMlsy7zLLMnMyXzLzNhc2HzLrMqM2UzYVazLfNgcyDzInMjcyCzJLMvc2AzIbNkc2bzYPNkcyHzZ3Mgc2YzJDNnc2AzYTNhM2gzZLNgsyFzITMgcyLzYTMvs2MzYrMsM2ZzLHMmM2HzKXMrMyhzZbNiM2IzZbNk8yrzZXMvMyizKLMrMy7zY3MvMyZzZnMs8yzzZXMps2VzZTNnMyjzYjMoMywzYXMqcypzZbMl82IzKPNlMyjzZPMqOW5uOemj+awuOmBoOiHquaXj+W5uOemjzLMts2CzL/Nhsy/zL/NoM2gzInNncyezKvNlcyuzJbMnM2TzLHNiMygzKzNic2HzJ/NiM2TzZNFzLTMgcyPzJvNm8yRzJLNi82RzZLMjc2RzZ3NhsyCzIvMpsyfzKfMpsyrzKvNjc2WzLLMrcy5zKDMnsyYzZrMscyszK/Njs2WzJjNlM2HzZrMrsylzLzNjcy6zK3MsM2TzJbMn8yczJ/MsMyuPcy0zI/NgMySzIPNgM2QzYbNgM2GzI7Mh82DzI/MhsySzYrMv82KzJLNl82EzJTNoM2AzJPNi8yAzJDMjMyGzI3Mj8yTzYvNhMyGzIXNoMyPzYDNgsyJzJvNm8ynzLvMp8ynzKbMpMyqzLzNh8ypzYXMs8yyzLLMoMy5zLnMu8yhzJfMu+aXj+W5uOemj2LMuMyTzZfNkcyHzL7NhMyDzYPMiMyTzIzMicyCzILMjsyNzIvMisyBzIfNmM2gzJHMhsyczKvMlsygzZzMmc2WzK/Mp23Mt8yEzL7Nnc2BzZ3NgM2dzJvNks2gzILMkM2YzZfNkcyVzJLMv82MzJLMrM2WzKrNlMyozLvNms2IzLvNlcyczYfMl8ykzK/MmMy7zKbMn8yyzYXMqsy5zKTMrcyizJjMvMylzKLMu82czKnNlc2czY3Ms8yqzK7NiMyhzKjMr8yxbMy0zYDMg8yRzJHMkcy+zaDMvs2AzaDMmsyBzL3Mhs2LzJvMv82MzJLMlcyDzKTMqcyrzKPMrcyYzJjNnM2WzKDMs82OzZnNjsy7zKLNicyqzLPMpcyszKjMpM2WzYjNk8ylzKXNk8y5zKXMp8ymzKfmhJvlj4vmg4Xlrrbml4/lubjnpo/msLjpgaDoh6rnlLHmnKrmnaXmlrDluIzmnJvmiJDlip/lj4vmhJvlv4PlkowKbsy2zIfMhM2SzJrMmcyszZXNmc2TzYXNk8ydzJbMu82UzKjNk82FzKLMocylzKnMs8yxzJZazLfMv8yGzJTMks2EzJHNi82dzIPNm82EzZ3NgsyTzIbNisyHzZDMg82KzYDNncyTzZHMjs2YzIDNkcyMzZ3MiMyKzIrMvcyIzYTNgs2YzZLNis2czKDMmc2FzZnMs8yYzJzMps2IzJ/Mr8yYMsy2zYrMlMyJzJvMn82FzJ/Moc2WzLLMl8yozK3Njsy6zKrMlsyhzK3Muc2OzJjMo82VzZrNlMy6zJ3Mns2FzLpFzLbNncybzIfNhsyLzL/NhM2gzJHMicySzYbNm8ybzZjMjM2BzZLNksyzzLzNh8ydzKPMssyyzKTMp8yczKDMsMyYzYXMp8ykzZbNhcymzZbMrMytzKTMnsyqzJ3NlsyszKbNjc2OzJ/MmD3MtM2gzIvMkcyLzL3Mis2EzJHNm8yAzIrNis2EzIfNgsyUzL3Mv82XzIDMms2LzYbNks2SzJvMj82MzYbMjc2EzInMkMyHzJHMkM2RzKnMsMyozK3Nls2VzKnNls2OzZzMpc2HzZzMvMyrzY7Mp8ynzKLMnc2azJzMl82ZzLrMpMy5zZTMqGLMt82dzIDNlsygzK7Mus2FzKLMoc2azYXNlM2TzK7Mu8ytzJfMrs2WzY7MpcyszKnNnMy6zKfNlcyizZzMrMyrzLnMls2JzKzMrsyezKvMls2NzLDNnM2UzK7NmcynzJfNlm3MuMyJzZjMgs2DzZfMgc2QzZvNncyDzILMks2RzJXNhM2AzIfMhc2YzIbNjMyCzZ3Mm82KzYDMvsyAzI3MusyvzY7MoMytzJjNjs2VzKrMu8ywzK7NhcyYzK3MnsyjzJ3MocyszJ/NmcytzKbMp8yfzLzMmc2czYfMoMynzKTMvM2ZzLHMosykzZPMuc2IzKLMnmzMtM2CzZ3NmMyQzIbMhMyazYvMg82DzIDNjM2BzIfMhs2RzIrNgsyHzYTMvcyGzL7MjsyFzYTMkcyEzYTNhMyUzYbNmM2LzZDMg82FzK3Mqc2azKHNk8yczLLMssypzJ7MpM2azYfMocyyzYduzLbNhsyMzYHNgM2EzZ3MhMyDzYDNncy5zJzMs1rMtM2XzaDMkMyLzJDMv82bzYTMk8yMzYnNiM2VzYjMosyozYnMrcyYzZbMu8yhzKDMr82TzKrNiMykzJbMmMyrzKbMscyfzYXNjmLMuMyJzZfMvsyUzJDMiM2RzJHMhM2MzZjMgMy9zYDNkM2QzInMm82dzInNg82dzIXNhsy+zZLNg82MzZzMs8yozKTMnMydzZw="; // 
+  const commentText = atob(commentBase64); 
+
+  function addAggressiveComments(node) {
+    // Dodawanie komentarzy przed, wewnątrz i po każdym typie węzła
+    if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE || node.nodeType === Node.COMMENT_NODE) {
+      const commentBefore = document.createComment(commentText);
+      const commentAfter = document.createComment(commentText);
+      
+      // Dodaj komentarze przed i po węźle
+      node.parentNode.insertBefore(commentBefore, node);
+      node.parentNode.insertBefore(commentAfter, node.nextSibling);
+
+      // Jeśli węzeł ma dzieci, iteruj dalej
+      if (node.childNodes.length > 0) {
+        Array.from(node.childNodes).forEach(addAggressiveComments);
+      }
+    }
+  }
+
+  function processAggressively() {
+    // Przetwarzaj początkowo od <body>
+    if (document.body) {
+      addAggressiveComments(document.body);
+    }
+
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes) {
+          mutation.addedNodes.forEach((addedNode) => {
+            addAggressiveComments(addedNode);
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", processAggressively);
+  } else {
+    processAggressively();
+  }
+})();
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    try {
+      // Tworzenie elementu audio
+      const audio = new Audio("sg.mp3"); 
+      audio.volume = 0.2; 
+      audio.loop = true; 
+      audio.preload = "auto"; 
+
+      // Funkcja uruchamiająca odtwarzanie
+      const startAudioPlayback = async () => {
+        try {
+          await audio.play();
+          console.log("Muzyka rozpoczęła odtwarzanie.");
+        } catch (err) {
+          console.warn(
+            "Autoodtwarzanie zablokowane przez przeglądarkę. Czekam na interakcję użytkownika...",
+            err
+          );
+        }
+      };
+
+     
+      startAudioPlayback();
+
+     
+      const unlockAudio = () => {
+        if (audio.paused) {
+          startAudioPlayback();
+        }
+        document.removeEventListener("click", unlockAudio);
+        document.removeEventListener("keydown", unlockAudio);
+      };
+
+      // Dodanie nasłuchiwania na kliknięcia i klawiaturę
+      document.addEventListener("click", unlockAudio);
+      document.addEventListener("keydown", unlockAudio);
+    } catch (error) {
+      console.error("kaputt ", error);
+    }
+  });
+</script>
+
+
+
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById("bot-modal");
+      const noButton = document.getElementById("no-button");
+      const yesButton = document.getElementById("yes-button");
+
+   
+      const hideModal = () => {
+        modal.style.display = "none";
+      };
+
+   
+      noButton.addEventListener("click", hideModal);
+      yesButton.addEventListener("click", hideModal);
+    });
+  </script>
+
+<script>
+
+  window.addEventListener("load", () => {
+    const modal = document.getElementById("bot-modal");
+    const noButton = document.getElementById("no-button");
+    const yesButton = document.getElementById("yes-button");
+
+    noButton.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    yesButton.addEventListener("click", () => {
+      alert("are you nigga big bot?:O");
+      modal.style.display = "none";
+    });
+  });
+</script>
+
+
+<script>
+
+  let devtoolsOpened = false;
+setInterval(() => {
+  const before = new Date();
+  debugger;
+  const after = new Date();
+  if (after - before > 100) {
+    devtoolsOpened = true;
+    alert('nigga close dev tools');
+  }
+}, 1000);
+
+
+document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I')) {
+    event.preventDefault();
+    alert('nah nigga');
+  }
+});
+
+
+
+Object.defineProperty(console, '_commandLineAPI', {
+  get: function () {
+    throw 'u got malware on hairs :O';
+  },
+});
+
+setInterval(() => {
+  console.clear();
+}, 10);
+
+
+</script>
+
+</body>
+
+</html>
