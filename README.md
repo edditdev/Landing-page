@@ -2,7 +2,7 @@
 
 ## Overview
 EDDIT.ME is a visually appealing and dynamic webpage showcasing a portfolio of projects and an online presence. It features a modern design with animated gradients, emoji effects, and interactive components, ensuring a captivating user experience.
-
+![preview](https://i.imgur.com/Z2ah5KD.png)
 ## Features
 
 ### **Modal Interaction**
